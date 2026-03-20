@@ -1,9 +1,5 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Icon from "@/components/ui/icon";
-import html2canvas from "html2canvas";
-
-const HERO_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/03d8ee1a-5419-4f6c-bdeb-956487ac0197.jpg";
-const ARTIST_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/bucket/fe7f5d0f-796d-40ce-b50e-69cee86be77b.jpg";
 
 interface Show {
   id: number;
@@ -74,28 +70,6 @@ const Index = () => {
   const [activeBlock, setActiveBlock] = useState<number | null>(null);
   const [expandedShow, setExpandedShow] = useState<number | null>(null);
   const [addedKey, setAddedKey] = useState<string | null>(null);
-  const [downloading, setDownloading] = useState(false);
-  const posterRef = useRef<HTMLDivElement>(null);
-
-  const downloadPoster = async () => {
-    if (!posterRef.current) return;
-    setDownloading(true);
-    try {
-      const canvas = await html2canvas(posterRef.current, {
-        backgroundColor: "#0d0d1f",
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-      });
-      const link = document.createElement("a");
-      link.download = "Большой-тур-2026.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    } finally {
-      setDownloading(false);
-    }
-  };
 
   const filtered = activeBlock ? SHOWS.filter((s) => s.block === activeBlock) : SHOWS;
 
@@ -125,15 +99,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen" style={{ background: "#080810" }}>
-
-      {/* TICKER */}
-      <div className="overflow-hidden py-2" style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
-        <div className="flex animate-ticker whitespace-nowrap select-none">
-          {Array(6).fill("🎵 PROJECT 23 · 28 ГОРОДОВ России · БИЛЕТЫ ОФИЦИАЛЬНО ·\u00A0").map((t, i) => (
-            <span key={i} className="text-white/90 text-xs font-unbounded font-semibold tracking-widest mr-0">{t}</span>
-          ))}
-        </div>
-      </div>
 
       {/* HEADER */}
       <header className="sticky top-0 z-50 glass-strong border-b border-white/5">
@@ -167,268 +132,8 @@ const Index = () => {
         </div>
       </header>
 
-      {/* HERO */}
-      <section className="relative min-h-[520px] flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={HERO_IMG} alt="Тур 2026" className="w-full h-full object-cover opacity-40" />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(to right, #080810 30%, transparent 70%), linear-gradient(to top, #080810 10%, transparent 60%)" }} />
-        </div>
-
-        {/* Glow orbs */}
-        <div className="absolute top-1/4 left-1/3 w-80 h-80 rounded-full blur-3xl pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(168,85,247,0.25), transparent)" }} />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full blur-3xl pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(236,72,153,0.2), transparent)" }} />
-
-        <div className="relative z-10 max-w-6xl mx-auto px-4 py-16">
-          <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium text-purple-300 mb-6 animate-fade-in"
-              style={{ border: "1px solid rgba(168,85,247,0.35)" }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              Продажа билетов открыта
-            </div>
-
-            <h1 className="font-unbounded text-5xl md:text-7xl font-black text-white leading-[0.95] mb-5 animate-fade-in delay-100">
-              PROJECT<br />
-              <span className="text-transparent bg-clip-text animate-gradient"
-                style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899, #f97316, #a855f7)" }}>
-                23
-              </span>
-            </h1>
-
-            <p className="text-white/60 text-lg mb-8 animate-fade-in delay-200 font-golos">
-              28 городов · 4 блока · апрель–июнь 2026
-            </p>
-
-            <div className="flex flex-wrap gap-3 animate-fade-in delay-300">
-              {[
-                { icon: "MapPin", val: "28", label: "городов" },
-                { icon: "Calendar", val: "4", label: "блока" },
-                { icon: "Users", val: "50К+", label: "зрителей" },
-              ].map((s) => (
-                <div key={s.label} className="glass rounded-2xl px-5 py-3 text-center min-w-[90px]">
-                  <div className="font-unbounded text-xl font-black text-white">{s.val}</div>
-                  <div className="text-xs text-white/40 mt-0.5">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* POSTER */}
-      <section className="max-w-6xl mx-auto px-4 mt-10 mb-14">
-        <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
-              <Icon name="Image" size={18} className="text-white" />
-            </div>
-            <div>
-              <h2 className="font-unbounded text-xl font-black text-white">Афиша тура</h2>
-              <p className="text-xs text-white/40 mt-0.5">Все города · Апрель — Июнь 2026</p>
-            </div>
-          </div>
-          <button
-            onClick={downloadPoster}
-            disabled={downloading}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}
-          >
-            {downloading ? (
-              <>
-                <Icon name="Loader2" size={16} className="text-white animate-spin" />
-                Создаю...
-              </>
-            ) : (
-              <>
-                <Icon name="Download" size={16} className="text-white" />
-                Скачать афишу
-              </>
-            )}
-          </button>
-        </div>
-
-        <div ref={posterRef} className="relative rounded-3xl overflow-hidden animate-fade-in"
-          style={{ background: "linear-gradient(135deg, #0d0d1f 0%, #120820 50%, #0d0d1f 100%)", border: "1px solid rgba(168,85,247,0.2)" }}>
-
-          {/* Background poster image */}
-          <div className="absolute inset-0">
-            <img src="https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/7b40f0cd-3161-4961-be29-735aa4be210b.jpg"
-              alt="" className="w-full h-full object-cover opacity-20" />
-            <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(8,8,16,0.85) 0%, rgba(20,8,40,0.75) 100%)" }} />
-          </div>
-
-          {/* Glow accents */}
-          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-30"
-            style={{ background: "radial-gradient(circle, #a855f7, transparent)" }} />
-          <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full blur-3xl pointer-events-none opacity-20"
-            style={{ background: "radial-gradient(circle, #ec4899, transparent)" }} />
-
-          <div className="relative z-10 p-8 md:p-12">
-            {/* Header */}
-            <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold text-white/80 mb-5"
-                style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3))", border: "1px solid rgba(168,85,247,0.4)" }}>
-                🎵 PROJECT 23 · ОФИЦИАЛЬНАЯ АФИША
-              </div>
-              <h3 className="font-unbounded text-4xl md:text-6xl font-black text-white leading-none mb-3">
-                PROJECT<br />
-                <span className="text-transparent bg-clip-text animate-gradient"
-                  style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899, #f97316, #a855f7)" }}>
-                  23
-                </span>
-              </h3>
-              <p className="text-white/40 font-unbounded text-sm tracking-widest">АПРЕЛЬ · МАЙ · ИЮНЬ</p>
-            </div>
-
-            {/* Divider */}
-            <div className="flex items-center gap-4 mb-10">
-              <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(168,85,247,0.5))" }} />
-              <Icon name="Music2" size={16} className="text-purple-400" />
-              <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(168,85,247,0.5))" }} />
-            </div>
-
-            {/* All 4 blocks in columns */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-              {[
-                { emoji: "🌲", title: "СИБИРЬ", sub: "10–21 апреля", cities: ["10 апр — Иркутск", "12 апр — Красноярск", "14 апр — Кемерово", "15 апр — Юрга", "17 апр — Новосибирск", "19 апр — Томск", "21 апр — Омск"] },
-                { emoji: "⛰️", title: "УРАЛ И ПОВОЛЖЬЕ", sub: "2–13 мая", cities: ["02 мая — Тюмень", "04 мая — Екатеринбург", "05 мая — Челябинск", "07 мая — Уфа", "09 мая — Оренбург", "11 мая — Самара", "13 мая — Казань"] },
-                { emoji: "☀️", title: "ЮГ", sub: "20–30 мая", cities: ["20 мая — Волгоград", "22 мая — Ростов-на-Дону", "24 мая — Белая Глина", "26 мая — Ставрополь", "28 мая — Краснодар", "30 мая — Сочи"] },
-                { emoji: "🏙️", title: "ЦЕНТР И СТОЛИЦЫ", sub: "5–14 июня", cities: ["05 июн — Воронеж", "07 июн — Нижний Новгород", "10 июн — Ярославль", "12 июн — Санкт-Петербург", "14 июн — Москва"] },
-              ].map((block, bi) => (
-                <div key={bi} className="animate-fade-in" style={{ animationDelay: `${bi * 0.1}s` }}>
-                  <div className="mb-3">
-                    <div className="text-xl mb-1">{block.emoji}</div>
-                    <div className="font-unbounded text-[11px] font-black text-white leading-tight tracking-wide">{block.title}</div>
-                    <div className="text-[10px] text-purple-400 mt-0.5 font-medium">{block.sub}</div>
-                  </div>
-                  <div className="space-y-1.5">
-                    {block.cities.map((city, ci) => {
-                      const [date, name] = city.split(" — ");
-                      return (
-                        <div key={ci} className="flex items-baseline gap-2">
-                          <span className="font-unbounded text-[10px] text-white/35 shrink-0 w-12">{date}</span>
-                          <span className="text-white/80 text-xs font-medium leading-tight">{name}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Bottom divider */}
-            <div className="flex items-center gap-4 mb-6">
-              <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(236,72,153,0.4))" }} />
-              <div className="flex gap-2">
-                {["🌲", "⛰️", "☀️", "🏙️"].map((e, i) => <span key={i} className="text-sm">{e}</span>)}
-              </div>
-              <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(236,72,153,0.4))" }} />
-            </div>
-
-            {/* Footer */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-center sm:text-left">
-                <p className="font-unbounded text-xs text-white/50 tracking-widest">ОФИЦИАЛЬНЫЕ БИЛЕТЫ</p>
-                <p className="text-white/25 text-[10px] mt-0.5">Все 28 концертов · 3 категории мест</p>
-              </div>
-              <div className="flex items-center gap-3">
-                {["Стандарт", "Фанзона", "VIP"].map((t, i) => (
-                  <span key={i} className={`text-[10px] font-bold px-2.5 py-1 rounded-full text-white bg-gradient-to-r ${["from-blue-500 to-cyan-500", "from-purple-500 to-pink-500", "from-yellow-400 to-orange-500"][i]}`}>{t}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT ARTIST */}
-      <section className="max-w-6xl mx-auto px-4 mt-10 mb-14">
-        <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Photo */}
-          <div className="relative animate-fade-in">
-            <div className="absolute -inset-1 rounded-3xl blur-xl opacity-50"
-              style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }} />
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-w-sm mx-auto md:mx-0">
-              <img src={ARTIST_IMG} alt="Исполнитель" className="w-full h-full object-cover" />
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,8,16,0.97) 0%, rgba(8,8,16,0.5) 45%, transparent 70%)" }} />
-              {/* Cities overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 space-y-3">
-                {[
-                  { emoji: "🌲", title: "Сибирь", cities: ["10 апр — Иркутск", "12 апр — Красноярск", "14 апр — Кемерово", "15 апр — Юрга", "17 апр — Новосибирск", "19 апр — Томск", "21 апр — Омск"] },
-                  { emoji: "⛰️", title: "Урал и Поволжье", cities: ["02 мая — Тюмень", "04 мая — Екатеринбург", "05 мая — Челябинск", "07 мая — Уфа", "09 мая — Оренбург", "11 мая — Самара", "13 мая — Казань"] },
-                  { emoji: "☀️", title: "Юг", cities: ["20 мая — Волгоград", "22 мая — Ростов-на-Дону", "24 мая — Белая Глина", "26 мая — Ставрополь", "28 мая — Краснодар", "30 мая — Сочи"] },
-                  { emoji: "🏙️", title: "Центр и Столицы", cities: ["05 июн — Воронеж", "07 июн — Нижний Новгород", "10 июн — Ярославль", "12 июн — Санкт-Петербург", "14 июн — Москва"] },
-                ].map((b) => (
-                  <div key={b.title}>
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <span className="text-xs">{b.emoji}</span>
-                      <span className="font-unbounded text-[9px] font-black text-purple-400 tracking-widest uppercase">{b.title}</span>
-                    </div>
-                    <div className="flex flex-wrap gap-x-3 gap-y-0.5">
-                      {b.cities.map((c) => {
-                        const [date, name] = c.split(" — ");
-                        return (
-                          <div key={c} className="flex items-baseline gap-1">
-                            <span className="font-unbounded text-[9px] text-white/35">{date}</span>
-                            <span className="text-white/75 text-[10px] font-medium">{name}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Info */}
-          <div className="animate-fade-in delay-200">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium text-purple-300 mb-5"
-              style={{ border: "1px solid rgba(168,85,247,0.3)" }}>
-              <Icon name="Star" size={12} className="text-yellow-400" />
-              Об исполнителе
-            </div>
-
-            <h2 className="font-unbounded text-3xl md:text-4xl font-black text-white mb-5 leading-tight">
-              PROJECT<br />
-              <span className="text-transparent bg-clip-text"
-                style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
-                23
-              </span>
-            </h2>
-
-            <p className="text-white/60 leading-relaxed mb-6 font-golos">
-              Масштабное турне охватит всю Россию — от Иркутска до Москвы. 28 городов, 4 блока, тысячи зрителей.
-              Живое звучание, новые аранжировки и неповторимая атмосфера живого концерта.
-            </p>
-
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {[
-                { icon: "MapPin", label: "28 городов", sub: "по всей России" },
-                { icon: "Clock", label: "2+ часа", sub: "живого шоу" },
-                { icon: "Music", label: "12 треков", sub: "в сет-листе" },
-                { icon: "Mic2", label: "Live-звук", sub: "без фонограммы" },
-              ].map((f) => (
-                <div key={f.label} className="glass rounded-2xl p-4 flex gap-3 items-start">
-                  <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3))" }}>
-                    <Icon name={f.icon} fallback="Star" size={15} className="text-purple-300" />
-                  </div>
-                  <div>
-                    <div className="text-white text-sm font-semibold">{f.label}</div>
-                    <div className="text-white/40 text-xs mt-0.5">{f.sub}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* BLOCKS FILTER */}
-      <section className="max-w-6xl mx-auto px-4 mb-8 mt-6">
+      <section className="max-w-6xl mx-auto px-4 mb-6 mt-8">
         <div className="flex flex-wrap gap-3">
           <button
             onClick={() => setActiveBlock(null)}
@@ -458,7 +163,6 @@ const Index = () => {
           if (shows.length === 0) return null;
           return (
             <div key={block.id} className="mb-8">
-              {/* Block header */}
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-2xl">{block.emoji}</span>
                 <div>
@@ -472,7 +176,6 @@ const Index = () => {
                   const isExpanded = expandedShow === show.id;
                   return (
                     <div key={show.id} className="animate-fade-in" style={{ animationDelay: `${idx * 0.04}s` }}>
-                      {/* Row */}
                       <div
                         className="concert-row glass rounded-2xl px-5 py-4 flex items-center gap-4 cursor-pointer"
                         onClick={() => setExpandedShow(isExpanded ? null : show.id)}
@@ -499,7 +202,6 @@ const Index = () => {
                         />
                       </div>
 
-                      {/* Expanded ticket picker */}
                       {isExpanded && (
                         <div className="mx-2 mt-1 glass rounded-2xl px-5 py-4 grid sm:grid-cols-3 gap-3 animate-fade-in">
                           {(["std", "fan", "vip"] as const).map((tier) => {
@@ -528,7 +230,10 @@ const Index = () => {
                                     className={`py-2 rounded-xl text-xs font-bold text-white transition-all flex items-center justify-center gap-1.5 ${justAdded ? "bg-green-500 scale-95" : "hover:opacity-90 hover:scale-[1.02]"}`}
                                     style={!justAdded ? { background: "linear-gradient(135deg, #a855f7, #ec4899)" } : {}}
                                   >
-                                    {justAdded ? <><Icon name="Check" size={13} className="text-white" /> Добавлено</> : <><Icon name="Plus" size={13} className="text-white" /> В корзину</>}
+                                    {justAdded
+                                      ? <><Icon name="Check" size={13} className="text-white" /> Добавлено</>
+                                      : <><Icon name="Plus" size={13} className="text-white" /> В корзину</>
+                                    }
                                   </button>
                                 )}
                               </div>
@@ -550,7 +255,6 @@ const Index = () => {
         <div className="fixed inset-0 z-50 flex">
           <div className="flex-1 bg-black/70 backdrop-blur-sm" onClick={() => setCartOpen(false)} />
           <div className="w-full max-w-md glass-strong border-l border-white/10 flex flex-col animate-slide-right">
-            {/* Cart header */}
             <div className="p-6 border-b border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -567,7 +271,6 @@ const Index = () => {
               </button>
             </div>
 
-            {/* Items */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {cart.length === 0 ? (
                 <div className="text-center py-20">
@@ -605,7 +308,6 @@ const Index = () => {
               )}
             </div>
 
-            {/* Checkout */}
             {cart.length > 0 && (
               <div className="p-5 border-t border-white/10 space-y-4">
                 <div className="flex items-center justify-between">
