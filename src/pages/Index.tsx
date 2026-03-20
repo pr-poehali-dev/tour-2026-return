@@ -129,7 +129,7 @@ const Index = () => {
       {/* TICKER */}
       <div className="overflow-hidden py-2" style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
         <div className="flex animate-ticker whitespace-nowrap select-none">
-          {Array(6).fill("🎵 БОЛЬШОЙ ТУР 2026 · 28 ГОРОДОВ РОССИИИ · БИЛЕТЫ ОФИЦИАЛЬНО ·\u00A0").map((t, i) => (
+          {Array(6).fill("🎵 PROJECT 23 · 28 ГОРОДОВ России · БИЛЕТЫ ОФИЦИАЛЬНО ·\u00A0").map((t, i) => (
             <span key={i} className="text-white/90 text-xs font-unbounded font-semibold tracking-widest mr-0">{t}</span>
           ))}
         </div>
@@ -146,7 +146,7 @@ const Index = () => {
               <Icon name="Music2" size={17} className="text-white" />
             </div>
             <div>
-              <div className="font-unbounded text-base font-black text-white leading-none neon-text">БОЛЬШОЙ ТУР</div>
+              <div className="font-unbounded text-base font-black text-white leading-none neon-text">PROJECT 23</div>
               <div className="text-xs text-white/40 font-golos">2026 · Официальные билеты</div>
             </div>
           </div>
@@ -189,10 +189,10 @@ const Index = () => {
             </div>
 
             <h1 className="font-unbounded text-5xl md:text-7xl font-black text-white leading-[0.95] mb-5 animate-fade-in delay-100">
-              БОЛЬШОЙ<br />
+              PROJECT<br />
               <span className="text-transparent bg-clip-text animate-gradient"
                 style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899, #f97316, #a855f7)" }}>
-                ТУР 2026
+                23
               </span>
             </h1>
 
@@ -270,13 +270,13 @@ const Index = () => {
             <div className="text-center mb-10">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold text-white/80 mb-5"
                 style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3))", border: "1px solid rgba(168,85,247,0.4)" }}>
-                🎵 БОЛЬШОЙ ТУР · ОФИЦИАЛЬНАЯ АФИША
+                🎵 PROJECT 23 · ОФИЦИАЛЬНАЯ АФИША
               </div>
               <h3 className="font-unbounded text-4xl md:text-6xl font-black text-white leading-none mb-3">
-                БОЛЬШОЙ<br />
+                PROJECT<br />
                 <span className="text-transparent bg-clip-text animate-gradient"
                   style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899, #f97316, #a855f7)" }}>
-                  ТУР 2026
+                  23
                 </span>
               </h3>
               <p className="text-white/40 font-unbounded text-sm tracking-widest">АПРЕЛЬ · МАЙ · ИЮНЬ</p>
@@ -352,13 +352,33 @@ const Index = () => {
               style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }} />
             <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-w-sm mx-auto md:mx-0">
               <img src={ARTIST_IMG} alt="Исполнитель" className="w-full h-full object-cover" />
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,8,16,0.7) 0%, transparent 50%)" }} />
-              <div className="absolute bottom-5 left-5 right-5">
-                <div className="flex gap-3">
-                  {["VK", "TG", "YM"].map((s) => (
-                    <div key={s} className="glass px-3 py-1.5 rounded-xl text-xs font-bold text-white/70">{s}</div>
-                  ))}
-                </div>
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,8,16,0.97) 0%, rgba(8,8,16,0.5) 45%, transparent 70%)" }} />
+              {/* Cities overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 space-y-3">
+                {[
+                  { emoji: "🌲", title: "Сибирь", cities: ["10 апр — Иркутск", "12 апр — Красноярск", "14 апр — Кемерово", "15 апр — Юрга", "17 апр — Новосибирск", "19 апр — Томск", "21 апр — Омск"] },
+                  { emoji: "⛰️", title: "Урал и Поволжье", cities: ["02 мая — Тюмень", "04 мая — Екатеринбург", "05 мая — Челябинск", "07 мая — Уфа", "09 мая — Оренбург", "11 мая — Самара", "13 мая — Казань"] },
+                  { emoji: "☀️", title: "Юг", cities: ["20 мая — Волгоград", "22 мая — Ростов-на-Дону", "24 мая — Белая Глина", "26 мая — Ставрополь", "28 мая — Краснодар", "30 мая — Сочи"] },
+                  { emoji: "🏙️", title: "Центр и Столицы", cities: ["05 июн — Воронеж", "07 июн — Нижний Новгород", "10 июн — Ярославль", "12 июн — Санкт-Петербург", "14 июн — Москва"] },
+                ].map((b) => (
+                  <div key={b.title}>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-xs">{b.emoji}</span>
+                      <span className="font-unbounded text-[9px] font-black text-purple-400 tracking-widest uppercase">{b.title}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+                      {b.cities.map((c) => {
+                        const [date, name] = c.split(" — ");
+                        return (
+                          <div key={c} className="flex items-baseline gap-1">
+                            <span className="font-unbounded text-[9px] text-white/35">{date}</span>
+                            <span className="text-white/75 text-[10px] font-medium">{name}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -372,10 +392,10 @@ const Index = () => {
             </div>
 
             <h2 className="font-unbounded text-3xl md:text-4xl font-black text-white mb-5 leading-tight">
-              Большой<br />
+              PROJECT<br />
               <span className="text-transparent bg-clip-text"
                 style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
-                Тур 2026
+                23
               </span>
             </h2>
 
