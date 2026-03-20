@@ -2,6 +2,22 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/03d8ee1a-5419-4f6c-bdeb-956487ac0197.jpg";
+const ARTIST_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/d5c51c9d-179e-4649-9075-0dde8c719097.jpg";
+
+const SETLIST = [
+  "Вступление / Инструментал",
+  "Блок I — Первые песни",
+  "Старые хиты",
+  "Акустический блок",
+  "Новый альбом — презентация",
+  "Середина шоу",
+  "Эмоциональный блок",
+  "Танцевальный блок",
+  "Финал основной программы",
+  "— Бис —",
+  "Главный хит",
+  "Финальная песня",
+];
 
 interface Show {
   id: number;
@@ -190,6 +206,116 @@ const Index = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ABOUT ARTIST */}
+      <section className="max-w-6xl mx-auto px-4 mt-10 mb-14">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          {/* Photo */}
+          <div className="relative animate-fade-in">
+            <div className="absolute -inset-1 rounded-3xl blur-xl opacity-50"
+              style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }} />
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-w-sm mx-auto md:mx-0">
+              <img src={ARTIST_IMG} alt="Исполнитель" className="w-full h-full object-cover" />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(8,8,16,0.7) 0%, transparent 50%)" }} />
+              <div className="absolute bottom-5 left-5 right-5">
+                <div className="flex gap-3">
+                  {["VK", "TG", "YM"].map((s) => (
+                    <div key={s} className="glass px-3 py-1.5 rounded-xl text-xs font-bold text-white/70">{s}</div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Info */}
+          <div className="animate-fade-in delay-200">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium text-purple-300 mb-5"
+              style={{ border: "1px solid rgba(168,85,247,0.3)" }}>
+              <Icon name="Star" size={12} className="text-yellow-400" />
+              Об исполнителе
+            </div>
+
+            <h2 className="font-unbounded text-3xl md:text-4xl font-black text-white mb-5 leading-tight">
+              Большой<br />
+              <span className="text-transparent bg-clip-text"
+                style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
+                Тур 2026
+              </span>
+            </h2>
+
+            <p className="text-white/60 leading-relaxed mb-6 font-golos">
+              Масштабное турне охватит всю Россию — от Иркутска до Москвы. 28 городов, 4 блока, тысячи зрителей.
+              Живое звучание, новые аранжировки и неповторимая атмосфера живого концерта.
+            </p>
+
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              {[
+                { icon: "MapPin", label: "28 городов", sub: "по всей России" },
+                { icon: "Clock", label: "2+ часа", sub: "живого шоу" },
+                { icon: "Music", label: "12 треков", sub: "в сет-листе" },
+                { icon: "Mic2", label: "Live-звук", sub: "без фонограммы" },
+              ].map((f) => (
+                <div key={f.label} className="glass rounded-2xl p-4 flex gap-3 items-start">
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3))" }}>
+                    <Icon name={f.icon} fallback="Star" size={15} className="text-purple-300" />
+                  </div>
+                  <div>
+                    <div className="text-white text-sm font-semibold">{f.label}</div>
+                    <div className="text-white/40 text-xs mt-0.5">{f.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SETLIST */}
+      <section className="max-w-6xl mx-auto px-4 mb-14">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
+            <Icon name="ListMusic" size={18} className="text-white" />
+          </div>
+          <div>
+            <h2 className="font-unbounded text-xl font-black text-white">Сет-лист</h2>
+            <p className="text-xs text-white/40 mt-0.5">Примерный порядок выступления</p>
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-2">
+          {SETLIST.map((track, i) => {
+            const isBis = track.startsWith("—");
+            return (
+              <div key={i}
+                className={`flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all ${isBis ? "col-span-full" : "concert-row glass"}`}
+                style={isBis ? { background: "linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15))", border: "1px solid rgba(168,85,247,0.25)" } : {}}>
+                {isBis ? (
+                  <div className="w-full text-center">
+                    <span className="font-unbounded text-sm font-bold text-transparent bg-clip-text"
+                      style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
+                      {track}
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <span className="font-unbounded text-xs text-white/20 w-5 text-right shrink-0">{i + 1}</span>
+                    <div className="w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }} />
+                    <span className="text-white/80 text-sm font-golos">{track}</span>
+                    <Icon name="Music" size={13} className="text-white/15 ml-auto shrink-0" />
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <p className="text-center text-white/25 text-xs mt-4">
+          * Порядок треков может меняться в зависимости от города
+        </p>
       </section>
 
       {/* BLOCKS FILTER */}
