@@ -3,22 +3,7 @@ import Icon from "@/components/ui/icon";
 import html2canvas from "html2canvas";
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/03d8ee1a-5419-4f6c-bdeb-956487ac0197.jpg";
-const ARTIST_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/d5c51c9d-179e-4649-9075-0dde8c719097.jpg";
-
-const SETLIST = [
-  "Вступление / Инструментал",
-  "Блок I — Первые песни",
-  "Старые хиты",
-  "Акустический блок",
-  "Новый альбом — презентация",
-  "Середина шоу",
-  "Эмоциональный блок",
-  "Танцевальный блок",
-  "Финал основной программы",
-  "— Бис —",
-  "Главный хит",
-  "Финальная песня",
-];
+const ARTIST_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/bucket/fe7f5d0f-796d-40ce-b50e-69cee86be77b.jpg";
 
 interface Show {
   id: number;
@@ -420,52 +405,6 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* SETLIST */}
-      <section className="max-w-6xl mx-auto px-4 mb-14">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
-            <Icon name="ListMusic" size={18} className="text-white" />
-          </div>
-          <div>
-            <h2 className="font-unbounded text-xl font-black text-white">Сет-лист</h2>
-            <p className="text-xs text-white/40 mt-0.5">Примерный порядок выступления</p>
-          </div>
-        </div>
-
-        <div className="grid sm:grid-cols-2 gap-2">
-          {SETLIST.map((track, i) => {
-            const isBis = track.startsWith("—");
-            return (
-              <div key={i}
-                className={`flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all ${isBis ? "col-span-full" : "concert-row glass"}`}
-                style={isBis ? { background: "linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15))", border: "1px solid rgba(168,85,247,0.25)" } : {}}>
-                {isBis ? (
-                  <div className="w-full text-center">
-                    <span className="font-unbounded text-sm font-bold text-transparent bg-clip-text"
-                      style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
-                      {track}
-                    </span>
-                  </div>
-                ) : (
-                  <>
-                    <span className="font-unbounded text-xs text-white/20 w-5 text-right shrink-0">{i + 1}</span>
-                    <div className="w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }} />
-                    <span className="text-white/80 text-sm font-golos">{track}</span>
-                    <Icon name="Music" size={13} className="text-white/15 ml-auto shrink-0" />
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <p className="text-center text-white/25 text-xs mt-4">
-          * Порядок треков может меняться в зависимости от города
-        </p>
       </section>
 
       {/* BLOCKS FILTER */}
