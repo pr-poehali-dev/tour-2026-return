@@ -235,3 +235,40 @@
     0 20px 60px rgba(168, 85, 247, 0.25),
     0 0 0 1px rgba(168, 85, 247, 0.2);
 }
+
+/* Concert row hover */
+.concert-row {
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+.concert-row:hover {
+  background: rgba(168, 85, 247, 0.08);
+  transform: translateX(4px);
+}
+
+/* Ticker */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-ticker {
+  animation: ticker 35s linear infinite;
+}
+
+.delay-600 {
+  animation-delay: 0.6s;
+}
+.delay-700 {
+  animation-delay: 0.7s;
+}
+
+.glass-strong {
+  background: rgba(8, 8, 20, 0.92) !important;
+  backdrop-filter: blur(28px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+}
