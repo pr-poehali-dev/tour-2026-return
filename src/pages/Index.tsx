@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Icon from "@/components/ui/icon";
+import html2canvas from "html2canvas";
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/03d8ee1a-5419-4f6c-bdeb-956487ac0197.jpg";
 const ARTIST_IMG = "https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/d5c51c9d-179e-4649-9075-0dde8c719097.jpg";
@@ -88,6 +89,28 @@ const Index = () => {
   const [activeBlock, setActiveBlock] = useState<number | null>(null);
   const [expandedShow, setExpandedShow] = useState<number | null>(null);
   const [addedKey, setAddedKey] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState(false);
+  const posterRef = useRef<HTMLDivElement>(null);
+
+  const downloadPoster = async () => {
+    if (!posterRef.current) return;
+    setDownloading(true);
+    try {
+      const canvas = await html2canvas(posterRef.current, {
+        backgroundColor: "#0d0d1f",
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+      });
+      const link = document.createElement("a");
+      link.download = "Большой-тур-2026.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   const filtered = activeBlock ? SHOWS.filter((s) => s.block === activeBlock) : SHOWS;
 
@@ -210,18 +233,38 @@ const Index = () => {
 
       {/* POSTER */}
       <section className="max-w-6xl mx-auto px-4 mt-10 mb-14">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
-            <Icon name="Image" size={18} className="text-white" />
+        <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
+              <Icon name="Image" size={18} className="text-white" />
+            </div>
+            <div>
+              <h2 className="font-unbounded text-xl font-black text-white">Афиша тура</h2>
+              <p className="text-xs text-white/40 mt-0.5">Все города · Апрель — Июнь 2026</p>
+            </div>
           </div>
-          <div>
-            <h2 className="font-unbounded text-xl font-black text-white">Афиша тура</h2>
-            <p className="text-xs text-white/40 mt-0.5">Все города · Апрель — Июнь 2026</p>
-          </div>
+          <button
+            onClick={downloadPoster}
+            disabled={downloading}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+            style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}
+          >
+            {downloading ? (
+              <>
+                <Icon name="Loader2" size={16} className="text-white animate-spin" />
+                Создаю...
+              </>
+            ) : (
+              <>
+                <Icon name="Download" size={16} className="text-white" />
+                Скачать афишу
+              </>
+            )}
+          </button>
         </div>
 
-        <div className="relative rounded-3xl overflow-hidden animate-fade-in"
+        <div ref={posterRef} className="relative rounded-3xl overflow-hidden animate-fade-in"
           style={{ background: "linear-gradient(135deg, #0d0d1f 0%, #120820 50%, #0d0d1f 100%)", border: "1px solid rgba(168,85,247,0.2)" }}>
 
           {/* Background poster image */}
