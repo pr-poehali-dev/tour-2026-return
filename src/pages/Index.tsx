@@ -208,6 +208,113 @@ const Index = () => {
         </div>
       </section>
 
+      {/* POSTER */}
+      <section className="max-w-6xl mx-auto px-4 mt-10 mb-14">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
+            style={{ background: "linear-gradient(135deg, #a855f7, #ec4899)" }}>
+            <Icon name="Image" size={18} className="text-white" />
+          </div>
+          <div>
+            <h2 className="font-unbounded text-xl font-black text-white">Афиша тура</h2>
+            <p className="text-xs text-white/40 mt-0.5">Все города · Апрель — Июнь 2026</p>
+          </div>
+        </div>
+
+        <div className="relative rounded-3xl overflow-hidden animate-fade-in"
+          style={{ background: "linear-gradient(135deg, #0d0d1f 0%, #120820 50%, #0d0d1f 100%)", border: "1px solid rgba(168,85,247,0.2)" }}>
+
+          {/* Background poster image */}
+          <div className="absolute inset-0">
+            <img src="https://cdn.poehali.dev/projects/84f31b16-2241-4456-8f09-caa19377bb15/files/7b40f0cd-3161-4961-be29-735aa4be210b.jpg"
+              alt="" className="w-full h-full object-cover opacity-20" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(8,8,16,0.85) 0%, rgba(20,8,40,0.75) 100%)" }} />
+          </div>
+
+          {/* Glow accents */}
+          <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-30"
+            style={{ background: "radial-gradient(circle, #a855f7, transparent)" }} />
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full blur-3xl pointer-events-none opacity-20"
+            style={{ background: "radial-gradient(circle, #ec4899, transparent)" }} />
+
+          <div className="relative z-10 p-8 md:p-12">
+            {/* Header */}
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold text-white/80 mb-5"
+                style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3))", border: "1px solid rgba(168,85,247,0.4)" }}>
+                🎵 БОЛЬШОЙ ТУР · ОФИЦИАЛЬНАЯ АФИША
+              </div>
+              <h3 className="font-unbounded text-4xl md:text-6xl font-black text-white leading-none mb-3">
+                БОЛЬШОЙ<br />
+                <span className="text-transparent bg-clip-text animate-gradient"
+                  style={{ backgroundImage: "linear-gradient(135deg, #a855f7, #ec4899, #f97316, #a855f7)" }}>
+                  ТУР 2026
+                </span>
+              </h3>
+              <p className="text-white/40 font-unbounded text-sm tracking-widest">АПРЕЛЬ · МАЙ · ИЮНЬ</p>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-4 mb-10">
+              <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(168,85,247,0.5))" }} />
+              <Icon name="Music2" size={16} className="text-purple-400" />
+              <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(168,85,247,0.5))" }} />
+            </div>
+
+            {/* All 4 blocks in columns */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+              {[
+                { emoji: "🌲", title: "СИБИРЬ", sub: "10–21 апреля", cities: ["10 апр — Иркутск", "12 апр — Красноярск", "14 апр — Кемерово", "15 апр — Юрга", "17 апр — Новосибирск", "19 апр — Томск", "21 апр — Омск"] },
+                { emoji: "⛰️", title: "УРАЛ И ПОВОЛЖЬЕ", sub: "2–13 мая", cities: ["02 мая — Тюмень", "04 мая — Екатеринбург", "05 мая — Челябинск", "07 мая — Уфа", "09 мая — Оренбург", "11 мая — Самара", "13 мая — Казань"] },
+                { emoji: "☀️", title: "ЮГ", sub: "20–30 мая", cities: ["20 мая — Волгоград", "22 мая — Ростов-на-Дону", "24 мая — Белая Глина", "26 мая — Ставрополь", "28 мая — Краснодар", "30 мая — Сочи"] },
+                { emoji: "🏙️", title: "ЦЕНТР И СТОЛИЦЫ", sub: "5–14 июня", cities: ["05 июн — Воронеж", "07 июн — Нижний Новгород", "10 июн — Ярославль", "12 июн — Санкт-Петербург", "14 июн — Москва"] },
+              ].map((block, bi) => (
+                <div key={bi} className="animate-fade-in" style={{ animationDelay: `${bi * 0.1}s` }}>
+                  <div className="mb-3">
+                    <div className="text-xl mb-1">{block.emoji}</div>
+                    <div className="font-unbounded text-[11px] font-black text-white leading-tight tracking-wide">{block.title}</div>
+                    <div className="text-[10px] text-purple-400 mt-0.5 font-medium">{block.sub}</div>
+                  </div>
+                  <div className="space-y-1.5">
+                    {block.cities.map((city, ci) => {
+                      const [date, name] = city.split(" — ");
+                      return (
+                        <div key={ci} className="flex items-baseline gap-2">
+                          <span className="font-unbounded text-[10px] text-white/35 shrink-0 w-12">{date}</span>
+                          <span className="text-white/80 text-xs font-medium leading-tight">{name}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom divider */}
+            <div className="flex items-center gap-4 mb-6">
+              <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(236,72,153,0.4))" }} />
+              <div className="flex gap-2">
+                {["🌲", "⛰️", "☀️", "🏙️"].map((e, i) => <span key={i} className="text-sm">{e}</span>)}
+              </div>
+              <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(236,72,153,0.4))" }} />
+            </div>
+
+            {/* Footer */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="text-center sm:text-left">
+                <p className="font-unbounded text-xs text-white/50 tracking-widest">ОФИЦИАЛЬНЫЕ БИЛЕТЫ</p>
+                <p className="text-white/25 text-[10px] mt-0.5">Все 28 концертов · 3 категории мест</p>
+              </div>
+              <div className="flex items-center gap-3">
+                {["Стандарт", "Фанзона", "VIP"].map((t, i) => (
+                  <span key={i} className={`text-[10px] font-bold px-2.5 py-1 rounded-full text-white bg-gradient-to-r ${["from-blue-500 to-cyan-500", "from-purple-500 to-pink-500", "from-yellow-400 to-orange-500"][i]}`}>{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ABOUT ARTIST */}
       <section className="max-w-6xl mx-auto px-4 mt-10 mb-14">
         <div className="grid md:grid-cols-2 gap-8 items-center">
